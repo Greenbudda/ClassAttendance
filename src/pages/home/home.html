@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <ion-icon name="cloudy-night"></ion-icon>  Class Attendance
+    </ion-title>
+
+    </ion-navbar>
+  </ion-header>
+ 
+<ion-content padding>
+<div swing-stack #myswing1 [stackConfig]="stackConfig" (throwoutleft)="voteUp(true)" (throwoutright)="voteUp(false)" id="card-stack">
+    <ion-card #mycards1 swing-card *ngFor="let c of cards">
+      <ion-item>
+          <p>
+            <img *ngIf="c.picture" [src]="c.picture">
+          </p>
+      </ion-item>
+ 
+      <ion-card-content >
+        <h1 style="color: blue;text-align: center;">{{ c.name }}</h1>
+        <!-- you can show things *ngIf="showDetails" 
+        <p>Father: {{ c.fatherName }}</p>
+        <p>Mother: {{ c.motherName }}</p>
+        <p>Phone Number: {{ c.phoneNumber }}</p>-->
+      </ion-card-content>
+ 
+      <ion-row *ngIf="c.name">
+        <ion-col>
+          <button ion-button clear small icon-left color="primary" (click)="voteUp(false)">
+            <ion-icon name="close-circle"></ion-icon>
+            <h2 style="color: red">Absent</h2>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button clear small icon-left color="primary" (click)="voteUp(true)">
+            <ion-icon name="checkmark-circle"></ion-icon>
+            <h2 style="color: green">Present</h2>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+  <p style="text-align: center; width: 100%;">{{ recentCard }}</p>
+</ion-content>
