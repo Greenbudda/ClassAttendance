@@ -1,5 +1,5 @@
 import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
-
+import { EmailComposer } from '@ionic-native/email-composer';
 import {
   StackConfig,
   Stack,
@@ -10,19 +10,20 @@ import {
   SwingStackComponent,
   SwingCardComponent} from 'angular2-swing';
 
-  @Component({
+
+@Component({
     templateUrl: 'home.html'
   })
-
 export class HomePage {
   @ViewChild('myswing1') swingStack: SwingStackComponent;
   @ViewChildren('mycards1') swingCards: QueryList<SwingCardComponent>;
 
   cards: Array<any>;
   stackConfig: StackConfig;
+  emailCompos : EmailComposer;
 
-  constructor() {
-
+  constructor(private emailComposer : EmailComposer) {
+    this.emailCompos = emailComposer;
     this.stackConfig = {
       allowedDirections: [
         Direction.LEFT,
@@ -47,7 +48,7 @@ export class HomePage {
     ];
   }
 
-  ngAfterViewInit() {
+  /*ngAfterViewInit() {
     // ViewChild & ViewChildren are only available
     // in this function
 
@@ -70,7 +71,7 @@ export class HomePage {
     this.swingStack.dragstart.subscribe((event: DragEvent) => console.log(event));
 
     this.swingStack.dragmove.subscribe((event: DragEvent) => console.log(event));
-  }
+  }*/
 
   // This method is called by hooking up the event
   // on the HTML element - see the template above
@@ -78,4 +79,27 @@ export class HomePage {
     console.log('Hook from the template', event.throwDirection);
   }
 
+  present(yes : boolean){
+    if(yes){
+      console.log("PRESENT");
+     // this.emailCompos.isAvailable().then((available: boolean) =>{
+       //  if(available) {
+           console.log("EMAIL Working");
+           let email = {
+              to: 'shahed.khan@ulab.edu.bd',
+              cc: 'shahed.khan@ulab.edu.b',
+              subject: 'Cordova Icons',
+              body: 'How are you? Nice greetings from Shahed',
+              isHtml: true
+            };
+            // Send a text message using default options
+            console.log(email);
+            this.emailCompos.open(email);
+            console.log("EMAIL SENT"+this.emailCompos.toString());
+          
+      } else {
+      console.log("ABSENT");
+    }
+  }
 }
+

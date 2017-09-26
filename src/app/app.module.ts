@@ -5,13 +5,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
  
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { HomePage } from '../pages/home/home.original';
+import { EmailComposer } from '@ionic-native/email-composer';
 import { HttpModule } from '@angular/http';
 import { SwingModule } from 'angular2-swing';
+
+
  
 @NgModule({
   declarations: [
     MyApp,
+    //EmailComposer,
     HomePage
   ],
   imports: [
@@ -23,11 +27,13 @@ import { SwingModule } from 'angular2-swing';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    //EmailSender,
     HomePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    EmailComposer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

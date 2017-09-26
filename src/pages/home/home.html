@@ -26,13 +26,13 @@
  
       <ion-row *ngIf="c.name">
         <ion-col>
-          <button ion-button clear small icon-left color="primary" (click)="voteUp(false)">
+          <button ion-button clear small icon-left color="primary" (click)="present(false)">
             <ion-icon name="close-circle"></ion-icon>
             <h2 style="color: red">Absent</h2>
           </button>
         </ion-col>
         <ion-col>
-          <button ion-button clear small icon-left color="primary" (click)="voteUp(true)">
+          <button ion-button clear small icon-left color="primary" (click)="present(true)">
             <ion-icon name="checkmark-circle"></ion-icon>
             <h2 style="color: green">Present</h2>
           </button>

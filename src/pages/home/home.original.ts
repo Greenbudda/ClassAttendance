@@ -13,7 +13,7 @@ import {
   SwingCardComponent} from 'angular2-swing';
  
   @Component({
-    templateUrl: 'home.html'
+    templateUrl: 'home.original.html'
   })
  
 export class HomePage {
@@ -23,6 +23,10 @@ export class HomePage {
   cards: Array<any>;
   stackConfig: StackConfig;
   recentCard: string = '';
+  endMessage: string = '';
+  counter: number;
+  presentCounter: number = 0;
+  absentCounter: number = 0;
   
   constructor(private http: Http) {
     this.stackConfig = {
@@ -36,6 +40,7 @@ export class HomePage {
         return 800;
       }
     };
+    this.counter = 1;
   }
   
   ngAfterViewInit() {
@@ -44,8 +49,8 @@ export class HomePage {
       event.target.style.background = '#ffffff';
     });
     
-    this.cards = [{email: ''}];
-    this.addNewCards(1);
+    this.cards = [{name: ''}];
+    this.addNewCards(this.counter);
   }
 
 // Called whenever we drag an element
@@ -66,25 +71,47 @@ onItemMove(element, x, y, r) {
 }
  
 // Connected through HTML
-voteUp(like: boolean) {
+present(present: boolean) {
   let removedCard = this.cards.pop();
-  this.addNewCards(1);
-  if (like) {
-    this.recentCard = 'You liked: ' + removedCard.email;
+  this.counter++;
+  this.addNewCards(this.counter);
+  if (present) {
+    this.presentCounter++;
+    this.recentCard = removedCard.name + ' is present!';
   } else {
-    this.recentCard = 'You disliked: ' + removedCard.email;
+    this.absentCounter++;
+    this.recentCard = removedCard.name + ' is absent!';
+  }
+  
+  if(this.counter == 5){
+   this.endMessage = " No More student left";
+   this.endMessage += " Absent # "+ this.absentCounter + " Present # "+ this.presentCounter;
+
   }
 }
  
 // Add new cards to our array
 addNewCards(count: number) {
-  this.http.get('https://randomuser.me/api/?results=' + count)
+  if (count == 1) {
+    this.cards.push({name: "Raphael", picture: '/assets/images/red.jpg'});
+  } else if (count == 2) {
+    this.cards.push({name: "Micheal", picture: '/assets/images/orange.jpg'});
+  } else if (count == 3) {
+    this.cards.push({name: "Donatello", picture: '/assets/images/purple.jpg'});
+  } else if (count == 4) {
+    this.cards.push({name: "Leonardo", picture: '/assets/images/blue.jpg'});
+  } else {
+    this.cards.push({name: "", picture: ''});
+  }
+ /* this.http.get('https://randomuser.me/api/?results=' + count)
   .map(data => data.json().results)
   .subscribe(result => {
     for (let val of result) {
+      console.log("Value: "+val.toString());
+      console.log("Res: "+result.toString());
       this.cards.push(val);
     }
-  })
+  })*/
 }
  
 // http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
